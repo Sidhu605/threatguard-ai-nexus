@@ -1,90 +1,48 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 0 0% 7%;
+    --foreground: 0 0% 87%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 218 32% 11%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 87%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 210 100% 40%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 223 15% 15%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 223 15% 15%;
+    --muted-foreground: 217.9 10.6% 64.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 100% 40%;
+    --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-background: 223 15% 15%;
+    --sidebar-foreground: 220 13% 91%;
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-accent: 224.3 76.3% 48%;
+    --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
@@ -96,6 +54,195 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-cyber-background text-cyber-foreground;
+  }
+
+  .risk-matrix-grid {
+    display: grid;
+    grid-template-columns: 60px repeat(3, 1fr);
+    grid-template-rows: 60px repeat(3, 1fr);
+    height: 100%;
+    width: 100%;
+  }
+
+  .risk-matrix-cell {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .risk-matrix-cell:hover:not(.header-cell) {
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
+  }
+
+  .header-cell {
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+
+  .critical-risk {
+    background-color: rgba(255, 62, 62, 0.2);
+  }
+
+  .high-risk {
+    background-color: rgba(255, 119, 0, 0.2);
+  }
+
+  .medium-risk {
+    background-color: rgba(255, 170, 0, 0.2);
+  }
+
+  .low-risk {
+    background-color: rgba(102, 204, 0, 0.2);
+  }
+
+  .cyber-card {
+    background-color: #1e1e2e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .cyber-card:hover {
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .threat-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .threat-indicator.critical {
+    background-color: #ff3e3e;
+    box-shadow: 0 0 8px rgba(255, 62, 62, 0.8);
+  }
+
+  .threat-indicator.high {
+    background-color: #ff7700;
+    box-shadow: 0 0 8px rgba(255, 119, 0, 0.8);
+  }
+
+  .threat-indicator.medium {
+    background-color: #ffaa00;
+    box-shadow: 0 0 8px rgba(255, 170, 0, 0.8);
+  }
+
+  .threat-indicator.low {
+    background-color: #66cc00;
+    box-shadow: 0 0 8px rgba(102, 204, 0, 0.8);
+  }
+
+  .threat-indicator.info {
+    background-color: #0099ff;
+    box-shadow: 0 0 8px rgba(0, 153, 255, 0.8);
+  }
+
+  .terminal-text {
+    font-family: 'Roboto Mono', monospace;
+    color: #00cc66;
+  }
+
+  .cyber-progress-bar {
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+
+  .cyber-progress-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .cyber-progress-bar-fill.critical {
+    background: linear-gradient(90deg, #ff3e3e, #ff7700);
+  }
+
+  .cyber-progress-bar-fill.high {
+    background: linear-gradient(90deg, #ff7700, #ffaa00);
+  }
+
+  .cyber-progress-bar-fill.medium {
+    background: linear-gradient(90deg, #ffaa00, #66cc00);
+  }
+
+  .cyber-progress-bar-fill.low {
+    background: linear-gradient(90deg, #66cc00, #0099ff);
+  }
+
+  .data-grid {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .data-grid th {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .data-grid td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .data-grid tr:hover td {
+    background-color: rgba(0, 204, 255, 0.05);
+  }
+
+  .cyber-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+
+  .cyber-tag.ml {
+    background-color: rgba(0, 153, 255, 0.2);
+    color: #0099ff;
+    border: 1px solid rgba(0, 153, 255, 0.3);
+  }
+
+  .cyber-tag.ai {
+    background-color: rgba(153, 0, 255, 0.2);
+    color: #9900ff;
+    border: 1px solid rgba(153, 0, 255, 0.3);
+  }
+
+  .cyber-tag.network {
+    background-color: rgba(0, 204, 102, 0.2);
+    color: #00cc66;
+    border: 1px solid rgba(0, 204, 102, 0.3);
+  }
+
+  .cyber-tag.endpoint {
+    background-color: rgba(255, 170, 0, 0.2);
+    color: #ffaa00;
+    border: 1px solid rgba(255, 170, 0, 0.3);
+  }
+
+  .cyber-tag.threat {
+    background-color: rgba(255, 62, 62, 0.2);
+    color: #ff3e3e;
+    border: 1px solid rgba(255, 62, 62, 0.3);
   }
 }
