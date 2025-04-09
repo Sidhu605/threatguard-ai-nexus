@@ -4,14 +4,26 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/componen
 import { Threat } from '@/models/threatModel';
 import { Button } from '@/components/ui/button';
 import { formatDistanceToNow } from 'date-fns';
-import { AlertTriangle, X, Shield, ArrowRight, Server, Database, Clock, Activity } from 'lucide-react';
+import { 
+  AlertTriangle, 
+  X, 
+  Shield, 
+  ArrowRight, 
+  Server, 
+  Database, 
+  Clock, 
+  Activity, 
+  Eye, 
+  CheckSquare 
+} from 'lucide-react';
 
 interface ThreatDetailsProps {
   threat: Threat;
   onClose: () => void;
+  onStatusChange: (threatId: string, newStatus: 'active' | 'investigating' | 'mitigated') => void;
 }
 
-const ThreatDetails: React.FC<ThreatDetailsProps> = ({ threat, onClose }) => {
+const ThreatDetails: React.FC<ThreatDetailsProps> = ({ threat, onClose, onStatusChange }) => {
   const getTimeAgo = (timestamp: string) => {
     return formatDistanceToNow(new Date(timestamp), { addSuffix: true });
   };
@@ -168,10 +180,39 @@ const ThreatDetails: React.FC<ThreatDetailsProps> = ({ threat, onClose }) => {
         <Button variant="outline" onClick={onClose}>
           Close
         </Button>
-        <Button className="bg-cyber-accent hover:bg-cyber-accent/80">
-          <Shield className="h-4 w-4 mr-2" />
-          Mitigate Threat
-        </Button>
+        
+        <div className="flex space-x-2">
+          {threat.status !== 'active' && (
+            <Button 
+              variant="destructive" 
+              onClick={() => onStatusChange(threat.id, 'active')}
+            >
+              <Shield className="h-4 w-4 mr-2" />
+              Mark Active
+            </Button>
+          )}
+          
+          {threat.status !== 'investigating' && (
+            <Button 
+              variant="default" 
+              className="bg-cyber-secondary hover:bg-cyber-secondary/80" 
+              onClick={() => onStatusChange(threat.id, 'investigating')}
+            >
+              <Eye className="h-4 w-4 mr-2" />
+              Investigate
+            </Button>
+          )}
+          
+          {threat.status !== 'mitigated' && (
+            <Button 
+              className="bg-cyber-accent hover:bg-cyber-accent/80"
+              onClick={() => onStatusChange(threat.id, 'mitigated')}
+            >
+              <CheckSquare className="h-4 w-4 mr-2" />
+              Mitigate
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );

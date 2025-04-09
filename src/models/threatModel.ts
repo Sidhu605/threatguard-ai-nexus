@@ -34,6 +34,50 @@ export const calculatePriority = (likelihood: number, impact: number): 'P1' | 'P
   return 'P4';
 };
 
+// New functions for threat management
+export const updateThreatStatus = (threats: Threat[], threatId: string, newStatus: ThreatStatus): Threat[] => {
+  return threats.map(threat => 
+    threat.id === threatId 
+      ? { ...threat, status: newStatus } 
+      : threat
+  );
+};
+
+export const filterThreats = (threats: Threat[], filter: string): Threat[] => {
+  switch (filter) {
+    case 'active':
+      return threats.filter(threat => threat.status === 'active');
+    case 'investigating':
+      return threats.filter(threat => threat.status === 'investigating');
+    case 'mitigated':
+      return threats.filter(threat => threat.status === 'mitigated');
+    case 'critical':
+      return threats.filter(threat => threat.severity === 'critical');
+    case 'high':
+      return threats.filter(threat => threat.severity === 'high');
+    case 'p1':
+      return threats.filter(threat => threat.priority === 'P1');
+    default:
+      return threats;
+  }
+};
+
+// Function to get threats by category
+export const getThreatsByCategory = (threats: Threat[]): Record<ThreatCategory, number> => {
+  const categoryCounts: Partial<Record<ThreatCategory, number>> = {};
+  
+  threats.forEach(threat => {
+    if (categoryCounts[threat.category]) {
+      categoryCounts[threat.category]!++;
+    } else {
+      categoryCounts[threat.category] = 1;
+    }
+  });
+  
+  return categoryCounts as Record<ThreatCategory, number>;
+};
+
+// Original mock threats array
 export const mockThreats: Threat[] = [
   {
     id: 'T-1001',
@@ -205,23 +249,4 @@ export const mockThreats: Threat[] = [
   },
 ];
 
-export const getThreatsInRiskMatrix = () => {
-  const matrix: Record<string, Threat[]> = {
-    '1-1': [],
-    '1-2': [],
-    '1-3': [],
-    '2-1': [],
-    '2-2': [],
-    '2-3': [],
-    '3-1': [],
-    '3-2': [],
-    '3-3': []
-  };
-  
-  mockThreats.forEach(threat => {
-    const { likelihood, impact } = threat.riskScore;
-    matrix[`${likelihood}-${impact}`].push(threat);
-  });
-  
-  return matrix;
-};
+// Remove the old getThreatsInRiskMatrix function as it's now handled directly in the RiskMatrix component

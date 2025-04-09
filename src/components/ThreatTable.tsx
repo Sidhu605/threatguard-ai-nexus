@@ -3,14 +3,27 @@ import React from 'react';
 import { Threat } from '@/models/threatModel';
 import { formatDistanceToNow } from 'date-fns';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { 
+  ExternalLink, 
+  Shield, 
+  Eye, 
+  CheckSquare, 
+  MoreHorizontal 
+} from 'lucide-react';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 interface ThreatTableProps {
   threats: Threat[];
   onThreatSelect: (threat: Threat) => void;
+  onStatusChange: (threatId: string, newStatus: 'active' | 'investigating' | 'mitigated') => void;
 }
 
-const ThreatTable: React.FC<ThreatTableProps> = ({ threats, onThreatSelect }) => {
+const ThreatTable: React.FC<ThreatTableProps> = ({ threats, onThreatSelect, onStatusChange }) => {
   // Sort threats by timestamp (most recent first)
   const sortedThreats = [...threats].sort((a, b) => {
     return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
@@ -65,14 +78,44 @@ const ThreatTable: React.FC<ThreatTableProps> = ({ threats, onThreatSelect }) =>
                 </span>
               </td>
               <td>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={() => onThreatSelect(threat)}
-                >
-                  <ExternalLink className="h-4 w-4 mr-1" />
-                  Details
-                </Button>
+                <div className="flex items-center space-x-2">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={() => onThreatSelect(threat)}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-1" />
+                    Details
+                  </Button>
+                  
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      {threat.status !== 'active' && (
+                        <DropdownMenuItem onClick={() => onStatusChange(threat.id, 'active')}>
+                          <Shield className="h-4 w-4 mr-2 text-threat-critical" />
+                          Mark as Active
+                        </DropdownMenuItem>
+                      )}
+                      {threat.status !== 'investigating' && (
+                        <DropdownMenuItem onClick={() => onStatusChange(threat.id, 'investigating')}>
+                          <Eye className="h-4 w-4 mr-2 text-threat-medium" />
+                          Mark as Investigating
+                        </DropdownMenuItem>
+                      )}
+                      {threat.status !== 'mitigated' && (
+                        <DropdownMenuItem onClick={() => onStatusChange(threat.id, 'mitigated')}>
+                          <CheckSquare className="h-4 w-4 mr-2 text-threat-low" />
+                          Mark as Mitigated
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </td>
             </tr>
           ))}
