@@ -9,13 +9,16 @@ import { toast } from 'sonner';
 
 const RiskAnalysis = () => {
   const [selectedThreat, setSelectedThreat] = useState<Threat | null>(null);
-  const [threats] = useState<Threat[]>(mockThreats);
+  const [threats, setThreats] = useState<Threat[]>(mockThreats);
 
   const handleThreatSelect = (threat: Threat) => {
     setSelectedThreat(threat);
   };
   
   const handleStatusChange = (threatId: string, newStatus: 'active' | 'investigating' | 'mitigated') => {
+    setThreats(threats.map(threat => 
+      threat.id === threatId ? { ...threat, status: newStatus } : threat
+    ));
     toast.success(`Threat ${threatId} status updated to ${newStatus}`);
   };
 
