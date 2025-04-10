@@ -13,12 +13,14 @@ const mockThreats: Threat[] = [
     description: "Multiple SQL injection attempts detected on the login page.",
     timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     severity: "critical",
-    category: "Web Application",
+    category: "Malware", // Updated to match ThreatCategory type
     status: "active",
-    source: "192.168.1.105",
-    target: "Auth API",
-    mitigation: "Implement prepared statements and input validation.",
-    details: "The attacker is attempting to exploit a vulnerability in the login form by injecting SQL commands."
+    source: ["network", "endpoint"], // Updated to array of ThreatSource
+    affectedAssets: ["Auth API"],
+    riskScore: { likelihood: 3, impact: 3 },
+    priority: "P1",
+    mitigationSteps: ["Implement prepared statements and input validation."],
+    detectionConfidence: 0.95
   },
   {
     id: "THREAT-002",
@@ -26,12 +28,14 @@ const mockThreats: Threat[] = [
     description: "Multiple failed login attempts from unusual locations.",
     timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
     severity: "high",
-    category: "Authentication",
+    category: "Unauthorized Access", // Updated to match ThreatCategory type
     status: "investigating",
-    source: "Multiple IPs",
-    target: "User accounts",
-    mitigation: "Implement rate limiting and geographic-based login restrictions.",
-    details: "Several user accounts are experiencing brute force login attempts from IPs associated with known botnets."
+    source: ["network", "endpoint"], // Updated to array of ThreatSource
+    affectedAssets: ["User accounts"],
+    riskScore: { likelihood: 2, impact: 2 },
+    priority: "P3",
+    mitigationSteps: ["Implement rate limiting and geographic-based login restrictions."],
+    detectionConfidence: 0.82
   },
   {
     id: "THREAT-003",
@@ -39,12 +43,14 @@ const mockThreats: Threat[] = [
     description: "Unusual outbound data transfer detected from database server.",
     timestamp: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
     severity: "critical",
-    category: "Database",
+    category: "Data Exfiltration", // Updated to match ThreatCategory type
     status: "active",
-    source: "Internal DB Server",
-    target: "External IP",
-    mitigation: "Block suspicious connections and scan for malware.",
-    details: "Large amount of data being transferred to an unknown external IP during non-business hours."
+    source: ["network", "ml"], // Updated to array of ThreatSource
+    affectedAssets: ["Internal DB Server", "External IP"],
+    riskScore: { likelihood: 3, impact: 3 },
+    priority: "P1",
+    mitigationSteps: ["Block suspicious connections and scan for malware."],
+    detectionConfidence: 0.91
   }
 ];
 
